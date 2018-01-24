@@ -1,0 +1,49 @@
+{
+  "name": "norm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 9"
+  },
+  "dependencies": {
+    "knex": "^0.14.2",
+    "pg": "^7.4.1"
+  },
+  "scripts": {
+    "start": "concurrently 'npm run run:dev' 'npm run lint:watch'",
+    "run:dev": "nodemon -w src -x ts-node src/index.ts",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "lint": "tslint --type-check -p tsconfig.json -c ./tslint.json 'src/**/*.ts' 'test/**/*.ts'",
+    "lint:watch": "watch 'npm run lint -- --force' ./src ./test -du --wait=0.2",
+    "pretest": "rm -fr ./build && tsc || exit 0",
+    "test": "NODE_PATH=./build NODE_ENV=test nyc ava build/test",
+    "posttest": "nyc check-coverage --statements 94 --branches 94 --functions 94 --lines 94"
+  },
+  "devDependencies": {
+    "@types/knex": "^0.14.1",
+    "ava": "^0.24.0",
+    "concurrently": "^3.5.1",
+    "istanbul": "^0.4.5",
+    "mock-knex": "^0.4.0",
+    "nodemon": "^1.14.11",
+    "nyc": "^11.4.1",
+    "sqlite3": "^3.1.13",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.9.1",
+    "tslint-eslint-rules": "^4.1.1",
+    "tslint-immutable": "^4.5.1",
+    "typescript": "^2.6.2",
+    "watch": "^1.0.2"
+  },
+  "nyc": {
+    "exclude": [
+      "**/test-*.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+node_modules
+.directory
+.DS_Store
+*.js
+npm-debug.log
+coverage
+build
+.nyc_output
